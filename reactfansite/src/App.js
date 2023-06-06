@@ -47,21 +47,21 @@ const App = () => {
     <div>
       {posts.map(post => (
         <div key={post.id}>
-          <h2>{post.title}</h2>
+          <h2>{post.id}</h2>
           {post.media_preview && (
             <>
-              {post.type === 2 ? (
+              {(post.media_preview.type === 1) ? (              
+                <img
+                  src={`https://dev-api.share-gram.com/v2/resources/${post.media_preview.url}`}
+                  alt="Media Preview"
+                  style={{ width: '300px', height: 'auto' }}
+                />
+              ) : (
                 <video
                   src={`https://dev-api.share-gram.com/v2/resources/${post.media_preview.url}`}
                   alt="Media Preview"
                   style={{ width: '300px', height: 'auto' }}
                   controls
-                />
-              ) : (
-                <img
-                  src={`https://dev-api.share-gram.com/v2/resources/${post.media_preview.url}`}
-                  alt="Media Preview"
-                  style={{ width: '300px', height: 'auto' }}
                 />
               )}
             </>
