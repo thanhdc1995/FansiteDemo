@@ -47,7 +47,7 @@ const App = () => {
     <div>
       {posts.map(post => (
         <div key={post.id}>
-          <h2>{post.id}</h2>
+          <h2>{post.title}</h2>
           {post.media_preview && (
             <>
               {(post.media_preview.type === 1) ? (              
