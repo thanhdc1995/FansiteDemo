@@ -49,11 +49,22 @@ const App = () => {
         <div key={post.id}>
           <h2>{post.title}</h2>
           {post.media_preview && (
-            <img
-              src={`https://dev-api.share-gram.com/v2/resources/${post.media_preview.url}`}
-              alt="Media Preview"
-              style={{ width: '300px', height: 'auto' }}
-            />
+            <>
+              {post.type === 2 ? (
+                <video
+                  src={`https://dev-api.share-gram.com/v2/resources/${post.media_preview.url}`}
+                  alt="Media Preview"
+                  style={{ width: '300px', height: 'auto' }}
+                  controls
+                />
+              ) : (
+                <img
+                  src={`https://dev-api.share-gram.com/v2/resources/${post.media_preview.url}`}
+                  alt="Media Preview"
+                  style={{ width: '300px', height: 'auto' }}
+                />
+              )}
+            </>
           )}
         </div>
       ))}
