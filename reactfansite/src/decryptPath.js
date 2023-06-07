@@ -2,7 +2,7 @@ import CryptoJS from "crypto-js";
 
 const decryptPath = function (pathEncrypted) {
   // The APP_KEY in .env file. Note that it is base64 encoded binary
-  var key = 'EMPOjqdtKqM/dNO3nWw6GNNjBCYQjmtolhNP5qRaYB0=';
+  var key = 'BvCBhMqzXCiGUaecKIxE551Dx4ueA64VJumfMsVyk9k=';
 
   // Laravel creates a JSON to store iv, value and a mac and base64 encodes it.
   // So let's base64 decode the string to get them.
