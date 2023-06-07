@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import decryptPath from './decryptPath';
 
 const API_URL = 'https://dev-api.share-gram.com/v2/demo-posts';
 const TOKEN = 'LbTh1WmBCeJUYqXXKlEj9E0719yTzpLxl095j79M';
@@ -52,13 +53,13 @@ const App = () => {
             <>
               {(post.media_preview.type === 1) ? (              
                 <img
-                  src={`https://dev-api.share-gram.com/v2/resources/${post.media_preview.url}`}
+                  src={decryptPath(post.media_preview.url)}
                   alt="Media Preview"
                   style={{ width: '300px', height: 'auto' }}
                 />
               ) : (
                 <video
-                  src={`https://dev-api.share-gram.com/v2/resources/${post.media_preview.url}`}
+                  src={`https://fansite-dev-video-output.s3.us-west-2.amazonaws.com/${decryptPath(post.media_preview.url)}`}
                   alt="Media Preview"
                   style={{ width: '300px', height: 'auto' }}
                   controls
