@@ -39,10 +39,4 @@ function App() {
   );
 }
 
-function decryptPath(encryptedLink, key) {
-  // Add your decryption logic here
-  // For demonstration purposes, this example simply returns the encryptedLink value
-  return encryptedLink;
-}
-
 export default App;
