@@ -1,77 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import decryptPath from './decryptPath';
+import React, { useState } from 'react';
+import DecryptPath from './decryptPath';
 
-const API_URL = 'https://dev-api.share-gram.com/v2/demo-posts';
-const TOKEN = 'LbTh1WmBCeJUYqXXKlEj9E0719yTzpLxl095j79M';
+function App() {
+  const [encryptedLink, setEncryptedLink] = useState('');
+  const [key, setKey] = useState('');
+  const [decryptedLink, setDecryptedLink] = useState('');
 
-const App = () => {
-  const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(`${API_URL}?page=${page}&limit=5`, {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          },
-        });
-        const data = response.data.data;
-        setPosts(prevPosts => [...prevPosts, ...data]);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, [page]);
-
-  const handleScroll = () => {
-    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight) {
-      setPage(prevPage => prevPage + 1);
-    }
+  const handleDecrypt = () => {
+    // Call your decryption logic here
+    const decryptedPath = DecryptPath(encryptedLink, key);
+    setDecryptedLink(decryptedPath);
   };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <div>
-      {posts.map(post => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          {post.media_preview && (
-            <>
-              {(post.media_preview.type === 1) ? (              
-                <img
-                  src={decryptPath(post.media_preview.url)}
-                  alt="Media Preview"
-                  style={{ width: '300px', height: 'auto' }}
-                />
-              ) : (
-                <video
-                  src={`https://fansite-dev-video-output.s3.us-west-2.amazonaws.com/${decryptPath(post.media_preview.url)}`}
-                  alt="Media Preview"
-                  style={{ width: '300px', height: 'auto' }}
-                  controls
-                />
-              )}
-            </>
-          )}
-        </div>
-      ))}
-      {isLoading && <p>Loading...</p>}
+      <label htmlFor="encryptedLink">Encrypted Link:  </label>
+      <input
+        type="text"
+        value={encryptedLink}
+        onChange={(e) => setEncryptedLink(e.target.value)}
+        placeholder="Enter encrypted link"
+      />
+      <br />
+      <label htmlFor="key">Key:  </label>
+      <input
+        type="text"
+        value={key}
+        onChange={(e) => setKey(e.target.value)}
+        placeholder="Enter key"
+      />
+      <button onClick={handleDecrypt}>Decrypt</button>
+      {decryptedLink && (
+        <p>
+          {decryptedLink}
+        </p>
+      )}
     </div>
   );
-};
+}
+
+function decryptPath(encryptedLink, key) {
+  // Add your decryption logic here
+  // For demonstration purposes, this example simply returns the encryptedLink value
+  return encryptedLink;
+}
 
 export default App;
