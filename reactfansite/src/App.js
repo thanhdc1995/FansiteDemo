@@ -1,31 +1,42 @@
 import React, { useState } from 'react';
-import ReactPlayer from 'react-player';
+import DecryptPath from './decryptPath';
 
-const App = () => {
-  const [videoUrl, setVideoUrl] = useState('');
-  const [playing, setPlaying] = useState(false);
+function App() {
+  const [encryptedLink, setEncryptedLink] = useState('');
+  const [key, setKey] = useState('');
+  const [decryptedLink, setDecryptedLink] = useState('');
 
-  const handlePlay = () => {
-    setPlaying(true);
-  };
-
-  const handleStop = () => {
-    setPlaying(false);
-  };
-
-  const handleInputChange = (event) => {
-    setVideoUrl(event.target.value);
+  const handleDecrypt = () => {
+    // Call your decryption logic here
+    const decryptedPath = DecryptPath(encryptedLink, key);
+    setDecryptedLink(decryptedPath);
   };
 
   return (
     <div>
-      <h1>Video Player</h1>
-      <input type="text" value={videoUrl} onChange={handleInputChange} />
-      <button onClick={handlePlay}>Play</button>
-      <button onClick={handleStop}>Stop</button>
-      <ReactPlayer url={videoUrl} playing={playing} controls />
+      <label htmlFor="encryptedLink">Encrypted Link:  </label>
+      <input
+        type="text"
+        value={encryptedLink}
+        onChange={(e) => setEncryptedLink(e.target.value)}
+        placeholder="Enter encrypted link"
+      />
+      <br />
+      <label htmlFor="key">Key:  </label>
+      <input
+        type="text"
+        value={key}
+        onChange={(e) => setKey(e.target.value)}
+        placeholder="Enter key"
+      />
+      <button onClick={handleDecrypt}>Decrypt</button>
+      {decryptedLink && (
+        <p>
+          {decryptedLink}
+        </p>
+      )}
     </div>
   );
-};
+}
 
 export default App;
